@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+  "name": "Downrawd",
+  "version": "1.0",
+  "description": "Download raw data on github",
+  "icons" : {
+    "64": "img/icon.png"
+  },
+  "page_action": {
+    "default_icon": "img/icon.png"
+  },
+  "background": {
+    "scripts": ["js/background.js"]
+  },
+  "content_scripts": [{
+      "matches": ["https://github.com/*"],
+      "js" : ["js/contentscript.js"]
+  }],
+  "permissions": [
+    "tabs"
+  ]
+}
