@@ -1,5 +1,9 @@
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
-  chrome.pageAction.show(sender.tab.id);
+const BLOB_PATTERN = /https:\/\/github.com\/(.*)\/blob\/(.*)/;
+
+chrome.tabs.onUpdated.addListener(function(tabId, info, tab){
+  if(info.url.match(BLOB_PATTERN)) {
+    chrome.pageAction.show(tabId);
+  }
 });
 
 chrome.pageAction.onClicked.addListener(function(tab){
@@ -10,7 +14,7 @@ chrome.pageAction.onClicked.addListener(function(tab){
 });
 
 function rawgitUrl(url) {
-  var contentUrl = url.replace(/https:\/\/github.com\/(.*)\/blob\/(.*)/, "https://github.com/$1/raw/$2")
+  var contentUrl = url.replace(BLOB_PATTERN, "https://github.com/$1/raw/$2")
   return contentUrl;
 }
 
